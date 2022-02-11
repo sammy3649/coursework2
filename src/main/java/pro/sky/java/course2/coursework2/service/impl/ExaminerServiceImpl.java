@@ -9,10 +9,10 @@ import pro.sky.java.course2.coursework2.service.QuestionService;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Random;
+
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
     QuestionService questionService;
-    Random random;
 
     public ExaminerServiceImpl(QuestionService questionService) {
         this.questionService = questionService;
@@ -23,13 +23,13 @@ public class ExaminerServiceImpl implements ExaminerService {
         HashSet<Question> examQuestion = new HashSet<>();
         if (amount > questionService.getAll().size()) {
             throw new HaveNotQuestionsException();
-        } else {
+        }
+        do {
             questionService.getRandomQuestion();
             examQuestion.add(questionService.getRandomQuestion());
         }
+        while (examQuestion.size() < amount);
         return examQuestion;
-
-
     }
 
 }

@@ -29,7 +29,7 @@ public class JavaServiceController {
     }
 
     @GetMapping("/find")
-    public Collection<Question> getQuestion() {
+    public Collection<Question> getAllQuestions() {
         return questionService.getAll();
     }
 }

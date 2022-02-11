@@ -25,11 +25,13 @@ public class Constants {
             new Question("Расскажи об иерархии коллекций", "Смотри шпаргалку № 2.5")));
 
     public static final int COUNT = 4;
+    public static final int QUESTIONS_COUNT = 5;
     public static final String QUESTION_TEST1 = "Что такое «переменная»??";
     public static final String ANSWER_TEST1 = "Смотри шпаргалку № 1.2";
     public static final Question TOTAL_QUESTION1 = new Question("Что такое «переменная»??", "Смотри шпаргалку № 1.2");
     public static final String QUESTION_TEST3 = "Что такое «Метод»??";
     public static final Question TOTAL_QUESTION = new Question("Что такое «метод»?", "Смотри шпаргалку № 1.8");
+
 
 
 }

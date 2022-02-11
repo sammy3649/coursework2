@@ -2,17 +2,21 @@ package pro.sky.java.course2.coursework2.service.impl;
 
 import org.springframework.stereotype.Service;
 import pro.sky.java.course2.coursework2.exeptions.HaveAnswerException;
+import pro.sky.java.course2.coursework2.exeptions.HaveNotFoundException;
+import pro.sky.java.course2.coursework2.exeptions.HaveNotQuestionsException;
 import pro.sky.java.course2.coursework2.exeptions.HaveQuestionExeption;
 import pro.sky.java.course2.coursework2.model.Question;
 import pro.sky.java.course2.coursework2.service.QuestionService;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Service
 public class JavaQuestionService implements QuestionService {
     private HashSet<Question> questions;
 
-    public JavaQuestionService() {
+    @PostConstruct
+    public void JavaQuestionService() {
         this.questions = questions;
         questions = new HashSet<>();
         questions.add(new Question("Что такое «переменная»??", "Смотри шпаргалку № 1.2"));
@@ -26,13 +30,15 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question add(String question, String answer) {
-        return new Question(question, answer);
+        Question question1 = new Question(question, answer);
+        return add(question1);
     }
 
     @Override
     public Question add(Question question) {
+        checkNotNull(question);
         if (questions.contains(question)) {
-            return question;
+            throw new HaveQuestionExeption();
         }
         if (questions.stream().anyMatch(question1 -> Objects.equals(question1.getQuestion(), question.getQuestion()))) {
             throw new HaveAnswerException();
@@ -44,8 +50,9 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question remove(Question question) {
-        if (questions.contains(question)) {
-            questions.remove(question);
+        checkNotNull(question);
+        if (!questions.remove(question)) {
+            throw new HaveNotQuestionsException();
         }
         return question;
     }
@@ -57,9 +64,14 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question getRandomQuestion() {
-        ArrayList<Question> getFinalQuestion = new ArrayList<>(questions);
-        Random random;
-        random = new Random();
-        return getFinalQuestion.get(random.nextInt(getFinalQuestion.size()));
+        ArrayList<Question> questionsSet = new ArrayList<>(questions);
+        Random random = new Random();
+        return questionsSet.get(random.nextInt(questionsSet.size()));
+    }
+
+    private void checkNotNull(Question question) {
+        if (question == null) {
+            throw new HaveNotFoundException();
+        }
     }
 }
