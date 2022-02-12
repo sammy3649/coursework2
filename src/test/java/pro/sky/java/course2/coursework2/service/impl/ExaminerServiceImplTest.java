@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pro.sky.java.course2.coursework2.exeptions.HaveNotFoundException;
+import pro.sky.java.course2.coursework2.exeptions.HaveNotQuestionsException;
 import pro.sky.java.course2.coursework2.model.Question;
 import pro.sky.java.course2.coursework2.service.QuestionService;
 
@@ -33,6 +34,6 @@ class ExaminerServiceImplTest {
 
     @Test
     void getQuestionExceptionTest() {
-        assertThrows(HaveNotFoundException.class, () -> out.getQuestion(QUESTIONS_COUNT));
+        assertThrows(HaveNotQuestionsException.class, () -> out.getQuestion(QUESTIONS_COUNT));
     }
 }

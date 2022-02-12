@@ -13,11 +13,9 @@ import java.util.*;
 
 @Service
 public class JavaQuestionService implements QuestionService {
-    private HashSet<Question> questions;
+    private final Set<Question> questions;
 
-    @PostConstruct
-    public void JavaQuestionService() {
-        this.questions = questions;
+    public JavaQuestionService() {
         questions = new HashSet<>();
         questions.add(new Question("Что такое «переменная»??", "Смотри шпаргалку № 1.2"));
         questions.add(new Question("Что такое «цикл»?", "Смотри шпаргалку № 1.3"));
@@ -37,12 +35,10 @@ public class JavaQuestionService implements QuestionService {
     @Override
     public Question add(Question question) {
         checkNotNull(question);
-        if (questions.contains(question)) {
-            throw new HaveQuestionExeption();
-        }
         if (questions.stream().anyMatch(question1 -> Objects.equals(question1.getQuestion(), question.getQuestion()))) {
             throw new HaveAnswerException();
         }
+
         questions.add(question);
 
         return question;
